@@ -3,6 +3,7 @@ import { AUTH_TOKEN } from '../constants'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
+// 注册
 const SIGNUP_MUTATION = gql`
 	mutation SignupMutation($email: String!, $password: String!, $name: String!) {
 		signup(email: $email, password: $password, name: $name) {
@@ -11,6 +12,7 @@ const SIGNUP_MUTATION = gql`
 	}
 `
 
+// 登录
 const LOGIN_MUTATION = gql`
 	mutation LoginMutation($email: String!, $password: String!) {
 		login(email: $email, password: $password) {
@@ -31,27 +33,27 @@ class Login extends Component {
 		const { login, email, password, name } = this.state
 		return (
 			<div>
-				<h4 className='mv3'>{login ? 'Login' : 'Sign Up'}</h4>
+				<h4 className='mv3'>{login ? '登录' : '注册'}</h4>
 				<div className='flex flex-column'>
 					{!login && (
 						<input
 							value={name}
 							onChange={e => this.setState({ name: e.target.value })}
 							type='text'
-							placeholder='Your name'
+							placeholder='请输入您的昵称'
 						/>
 					)}
 					<input
 						value={email}
 						onChange={e => this.setState({ email: e.target.value })}
 						type='text'
-						placeholder='Your email address'
+						placeholder='请输入您的邮箱'
 					/>
 					<input
 						value={password}
 						onChange={e => this.setState({ password: e.target.value })}
 						type='password'
-						placeholder='Choose a safe password'
+						placeholder='请输入您的密码'
 					/>
 				</div>
 				<div className='flex mt3'>
@@ -62,7 +64,7 @@ class Login extends Component {
 					>
 						{mutation => (
 							<div className='pointer mr2 button' onClick={mutation}>
-								{login ? 'login' : 'create account'}
+								{login ? '登录' : '注册'}
 							</div>
 						)}
 					</Mutation>
@@ -71,7 +73,7 @@ class Login extends Component {
 						className='pointer button'
 						onClick={() => this.setState({ login: !login })}
 					>
-						{login ? 'need to create an account?' : 'already have an account?'}
+						{login ? '创建新账号？' : '已有账号，前往登录'}
 					</div>
 				</div>
 			</div>

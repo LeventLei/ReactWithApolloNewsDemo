@@ -3,6 +3,7 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import Link from './Link'
 
+// 条件搜索
 const FEED_SEARCH_QUERY = gql`
 	query FeedSearchQuery($filter: String!) {
 		feed(filter: $filter) {
@@ -32,6 +33,7 @@ class Search extends Component {
 		filter: ''
 	}
 
+	// 执行搜索
 	_executeSearch = async () => {
 		const { filter } = this.state
 		const result = await this.props.client.query({
@@ -53,7 +55,7 @@ class Search extends Component {
 						type='text'
 						onChange={e => this.setState({ filter: e.target.value })}
 					/>
-					<button onClick={() => this._executeSearch()}>OK</button>
+					<button onClick={() => this._executeSearch()}>搜索</button>
 				</div>
 				{this.state.links.map((link, index) => (
 					<Link key={link.id} link={link} index={index}></Link>

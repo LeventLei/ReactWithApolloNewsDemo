@@ -9,19 +9,23 @@ class Header extends Component {
 		return (
 			<div className='flex pa1 justify-between nowrap orange'>
 				<div className='flex flex-fixed black'>
-					<div className='fw7 mr1'>Hacker News</div>
+					<div className='fw7 mr1'>爆炸新闻</div>
 					<Link to='/' className='ml1 no-underline black'>
-						new
+						新闻
+					</Link>
+					<div className='ml1'>|</div>
+					<Link to='/top' className='ml1 no-underline black'>
+						头条
 					</Link>
 					<div className='ml1'>|</div>
 					<Link to='/search' className='ml1 no-underline black'>
-						search
+						搜索
 					</Link>
 					{authToken && (
 						<div className='flex'>
 							<div className='ml1'>|</div>
 							<Link to='/create' className='ml1 no-underline black'>
-								submit
+								创建
 							</Link>
 						</div>
 					)}
@@ -35,11 +39,11 @@ class Header extends Component {
 								this.props.history.push(`/`)
 							}}
 						>
-							logout
+							退出
 						</div>
 					) : (
 						<Link to='/login' className='ml1 no-underline black'>
-							login
+							登录
 						</Link>
 					)}
 				</div>

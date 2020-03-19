@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { FEED_QUERY } from './LinkList'
+import { LINKS_PER_PAGE } from '../constants'
 
+// 发表新闻
 const POST_MUTATION = gql`
 	mutation PostMutation($description: String!, $url: String!) {
 		post(description: $description, url: $url) {
@@ -30,26 +32,33 @@ class CreateLink extends Component {
 						className='mb2'
 						value={description}
 						onChange={e => this.setState({ description: e.target.value })}
-						placeholder='A description for the link'
+						placeholder='请填写新闻标题'
 					/>
 					<input
 						type='text'
 						className='mb2'
 						value={url}
 						onChange={e => this.setState({ url: e.target.value })}
-						placeholder='The URl for the link'
+						placeholder='请填写新闻地址'
 					/>
 				</div>
 				<Mutation
 					mutation={POST_MUTATION}
 					variables={{ description, url }}
-					onCompleted={() => this.props.history.push('/')}
+					onCompleted={() => this.props.history.push('/new/1')}
 					update={(store, { data: { post } }) => {
-						const data = store.readQuery({ query: FEED_QUERY })
+						const first = LINKS_PER_PAGE
+						const skip = 0
+						const orderBy = 'createdAt_DESC'
+						const data = store.readQuery({
+							query: FEED_QUERY,
+							variables: { first, skip, orderBy }
+						})
 						data.feed.links.unshift(post)
 						store.writeQuery({
 							query: FEED_QUERY,
-							data
+							data,
+							variables: { first, skip, orderBy }
 						})
 					}}
 				>
